@@ -18,80 +18,50 @@ package com.alibaba.dubbo.common.serialize;
 
 import java.io.IOException;
 
-/**
- * Data input.
- */
 public interface DataInput {
 
     /**
-     * Read boolean.
      * 读取布尔类型
-     * @return boolean.
-     * @throws IOException
      */
     boolean readBool() throws IOException;
 
     /**
-     * Read byte.
      * 读取字节
-     * @return byte value.
-     * @throws IOException
      */
     byte readByte() throws IOException;
 
     /**
-     * Read short integer.
      * 读取short类型
-     * @return short.
-     * @throws IOException
      */
     short readShort() throws IOException;
 
     /**
-     * Read integer.
      * 读取integer类型
-     * @return integer.
-     * @throws IOException
      */
     int readInt() throws IOException;
 
     /**
-     * Read long.
      * 读取long类型
-     * @return long.
-     * @throws IOException
      */
     long readLong() throws IOException;
 
     /**
-     * Read float.
      * 读取float类型
-     * @return float.
-     * @throws IOException
      */
     float readFloat() throws IOException;
 
     /**
-     * Read double.
      * 读取double类型
-     * @return double.
-     * @throws IOException
      */
     double readDouble() throws IOException;
 
     /**
-     * Read UTF-8 string.
      * 读取UTF-8 string
-     * @return string.
-     * @throws IOException
      */
     String readUTF() throws IOException;
 
     /**
-     * Read byte array.
      * 读取byte数组
-     * @return byte array.
-     * @throws IOException
      */
     byte[] readBytes() throws IOException;
 }

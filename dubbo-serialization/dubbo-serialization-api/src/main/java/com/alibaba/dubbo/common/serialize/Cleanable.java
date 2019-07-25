@@ -20,6 +20,7 @@ public interface Cleanable {
 
     /**
      * 清理
+     * 目前只有kryo实现的时候，完成序列化或反序列化，需要做清理。
      */
     void cleanup();
 }

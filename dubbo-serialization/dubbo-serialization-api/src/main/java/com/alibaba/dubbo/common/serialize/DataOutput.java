@@ -18,97 +18,60 @@ package com.alibaba.dubbo.common.serialize;
 
 import java.io.IOException;
 
-/**
- * Data output.
- */
 public interface DataOutput {
 
     /**
-     * Write boolean.
      * 输出boolean类型
-     * @param v value.
-     * @throws IOException
      */
     void writeBool(boolean v) throws IOException;
 
     /**
-     * Write byte.
      * 输出byte类型
-     * @param v value.
-     * @throws IOException
      */
     void writeByte(byte v) throws IOException;
 
     /**
-     * Write short.
      * 输出short类型
-     * @param v value.
-     * @throws IOException
      */
     void writeShort(short v) throws IOException;
 
     /**
-     * Write integer.
      * 输出integer类型
-     * @param v value.
-     * @throws IOException
      */
     void writeInt(int v) throws IOException;
 
     /**
-     * Write long.
      * 输出long类型
-     * @param v value.
-     * @throws IOException
      */
     void writeLong(long v) throws IOException;
 
     /**
-     * Write float.
      * 输出float类型
-     * @param v value.
-     * @throws IOException
      */
     void writeFloat(float v) throws IOException;
 
     /**
-     * Write double.
      * 输出double类型
-     * @param v value.
-     * @throws IOException
      */
     void writeDouble(double v) throws IOException;
 
     /**
-     * Write string.
      * 输出string类型
-     * @param v value.
-     * @throws IOException
      */
     void writeUTF(String v) throws IOException;
 
     /**
-     * Write byte array.
      * 输出byte数组
-     * @param v value.
-     * @throws IOException
      */
     void writeBytes(byte[] v) throws IOException;
 
     /**
-     * Write byte array.
      * 输出byte数组中部分数据
-     * @param v   value.
-     * @param off offset.
-     * @param len length.
-     * @throws IOException
      */
     void writeBytes(byte[] v, int off, int len) throws IOException;
 
     /**
-     * Flush buffer.
      * 刷新缓冲区
-     * @throws IOException
      */
     void flushBuffer() throws IOException;
 }

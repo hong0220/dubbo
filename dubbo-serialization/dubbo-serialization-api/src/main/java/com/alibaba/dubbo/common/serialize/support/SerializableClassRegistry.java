@@ -36,7 +36,6 @@ public abstract class SerializableClassRegistry {
 
     /**
      * 获得可序列化的类的集合
-     * @return
      */
     public static Set<Class> getRegisteredClasses() {
         return registrations;

@@ -19,32 +19,20 @@ package com.alibaba.dubbo.common.serialize;
 import java.io.IOException;
 import java.lang.reflect.Type;
 
-/**
- * Object input.
- */
 public interface ObjectInput extends DataInput {
 
     /**
-     * read object.
      * 读取object类型数据
-     * @return object.
      */
     Object readObject() throws IOException, ClassNotFoundException;
 
     /**
-     * read object.
      * 根据class类型读取object类型数据
-     * @param cls object type.
-     * @return object.
      */
     <T> T readObject(Class<T> cls) throws IOException, ClassNotFoundException;
 
     /**
-     * read object.
-     * 取object类型数据
-     * @param cls object type.
-     * @return object.
+     * 读取object类型数据
      */
     <T> T readObject(Class<T> cls, Type type) throws IOException, ClassNotFoundException;
-
 }
