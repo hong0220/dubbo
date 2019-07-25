@@ -28,8 +28,6 @@ import java.util.List;
 public interface NotifyListener {
 
     /**
-     * Triggered when a service change notification is received.
-     * <p>
      * Notify needs to support the contract: <br>
      * 1. Always notifications on the service interface and the dimension of the data type. that is, won't notify part of the same type data belonging to one service. Users do not need to compare the results of the previous notification.<br>
      * 2. The first notification at a subscription must be a full notification of all types of data of a service.<br>
@@ -40,7 +38,7 @@ public interface NotifyListener {
      * @param urls The list of registered information , is always not empty. The meaning is the same as the return value of {@link com.alibaba.dubbo.registry.RegistryService#lookup(URL)}.
      */
     /**
-     * 当收到服务变更通知时触发。
+     * 当服务变更通知被收到时触发回调
      * <p>
      * 通知需处理契约：<br>
      * 1. 总是以服务接口和数据类型为维度全量通知，即不会通知一个服务的同类型的部分数据，用户不需要对比上一次通知结果。<br>
@@ -52,5 +50,4 @@ public interface NotifyListener {
      * @param urls 已注册信息列表，总不为空，含义同{@link com.alibaba.dubbo.registry.RegistryService#lookup(URL)}的返回值。
      */
     void notify(List<URL> urls);
-
 }

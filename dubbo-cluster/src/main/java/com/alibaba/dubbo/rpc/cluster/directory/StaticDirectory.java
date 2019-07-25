@@ -25,8 +25,7 @@ import com.alibaba.dubbo.rpc.cluster.Router;
 import java.util.List;
 
 /**
- * StaticDirectory
- *
+ * Invoker是通过构造函数传入,用在服务对多注册中心的引用
  */
 public class StaticDirectory<T> extends AbstractDirectory<T> {
 
@@ -86,8 +85,6 @@ public class StaticDirectory<T> extends AbstractDirectory<T> {
 
     @Override
     protected List<Invoker<T>> doList(Invocation invocation) throws RpcException {
-
         return invokers;
     }
-
 }

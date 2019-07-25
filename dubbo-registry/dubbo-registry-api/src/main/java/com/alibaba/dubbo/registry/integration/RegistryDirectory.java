@@ -53,10 +53,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * RegistryDirectory
- *
- */
 public class RegistryDirectory<T> extends AbstractDirectory<T> implements NotifyListener {
 
     private static final Logger logger = LoggerFactory.getLogger(RegistryDirectory.class);
@@ -109,7 +105,7 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
      */
     private Registry registry; // Initialization at the time of injection, the assertion is not null
     /**
-     *  是否禁止访问
+     * 是否禁止访问
      */
     private volatile boolean forbidden = false;
 
@@ -119,11 +115,7 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
     private volatile URL overrideDirectoryUrl; // Initialization at construction time, assertion not null, and always assign non null value
 
     /**
-     * override rules
-     * Priority: override>-D>consumer>provider
-     * Rule one: for a certain provider <ip:port,timeout=100>
-     * Rule two: for all providers <* ,timeout=5000>
-     * 配置规则数组
+     * override rules Priority: override>-D>consumer>provider Rule one: for a certain provider <ip:port,timeout=100> Rule two: for all providers <* ,timeout=5000> 配置规则数组
      */
     private volatile List<Configurator> configurators; // The initial value is null and the midway may be assigned to null, please use the local variable reference
 
@@ -162,11 +154,8 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
     }
 
     /**
-     * 处理配置规则url集合
-     * Convert override urls to map for use when re-refer.
-     * Send all rules every time, the urls will be reassembled and calculated
-     * 转换覆盖网址以映射以便在重新引用时使用。
-     * 每次发送所有规则，网址将被重新组装和计算
+     * 处理配置规则url集合 Convert override urls to map for use when re-refer. Send all rules every time, the urls will be reassembled and calculated 转换覆盖网址以映射以便在重新引用时使用。 每次发送所有规则，网址将被重新组装和计算
+     *
      * @param urls Contract:
      *             </br>1.override://0.0.0.0/...( or override://ip:port...?anyhost=true)&para1=value1... means global rules (all of the providers take effect)
      *             </br>2.override://ip:port...?anyhost=false Special rules (only for a certain provider)
@@ -248,6 +237,7 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
 
     /**
      * 通知监听器，变化结果
+     *
      * @param urls 已注册信息列表，总不为空，含义同{@link com.alibaba.dubbo.registry.RegistryService#lookup(URL)}的返回值。
      */
     @Override
@@ -306,16 +296,11 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
     }
 
     /**
-     * 处理服务提供者 URL 集合
-     * Convert the invokerURL list to the Invoker Map. The rules of the conversion are as follows:
-     * 1.If URL has been converted to invoker, it is no longer re-referenced and obtained directly from the cache, and notice that any parameter changes in the URL will be re-referenced.
-     * 2.If the incoming invoker list is not empty, it means that it is the latest invoker list
-     * 3.If the list of incoming invokerUrl is empty, It means that the rule is only a override rule or a route rule, which needs to be re-contrasted to decide whether to re-reference.
+     * 处理服务提供者 URL 集合 Convert the invokerURL list to the Invoker Map. The rules of the conversion are as follows: 1.If URL has been converted to invoker, it is no longer re-referenced and obtained directly from the cache, and notice that any parameter changes in the URL will be re-referenced. 2.If
+     * the incoming invoker list is not empty, it means that it is the latest invoker list 3.If the list of incoming invokerUrl is empty, It means that the rule is only a override rule or a route rule, which needs to be re-contrasted to decide whether to re-reference.
+     * <p>
+     * 根据 invokerURL 列表转换为 invoker 列表。转换规则如下： 1.如果 url 已经被转换为 invoker ，则不在重新引用，直接从缓存中获取，注意如果 url 中任何一个参数变更也会重新引用 2.如果传入的 invoker 列表不为空，则表示最新的 invoker 列表 3.如果传入的 invokerUrl 列表是空，则表示只是下发的 override 规则或 route 规则，需要重新交叉对比，决定是否需要重新引用。
      *
-     * 根据 invokerURL 列表转换为 invoker 列表。转换规则如下：
-     * 1.如果 url 已经被转换为 invoker ，则不在重新引用，直接从缓存中获取，注意如果 url 中任何一个参数变更也会重新引用
-     * 2.如果传入的 invoker 列表不为空，则表示最新的 invoker 列表
-     * 3.如果传入的 invokerUrl 列表是空，则表示只是下发的 override 规则或 route 规则，需要重新交叉对比，决定是否需要重新引用。
      * @param invokerUrls this parameter can't be null
      */
     // TODO: 2017/8/31 FIXME The thread pool should be used to refresh the address, otherwise the task may be accumulated.
@@ -356,6 +341,7 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
                 logger.error(new IllegalStateException("urls to invokers error .invokerUrls.size :" + invokerUrls.size() + ", invoker.size :0. urls :" + invokerUrls.toString()));
                 return;
             }
+            // 更新invoker
             // 若服务引用多 group ，则按照 method + group 聚合 Invoker 集合
             this.methodInvokerMap = multiGroup ? toMergeMethodInvokerMap(newMethodInvokerMap) : newMethodInvokerMap;
             this.urlInvokerMap = newUrlInvokerMap;
@@ -370,6 +356,7 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
 
     /**
      * 按照 method + group 聚合 Invoker 集合
+     *
      * @param methodMap
      * @return
      */
@@ -420,9 +407,9 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
 
     /**
      * 处理路由规则 URL 集合
+     *
      * @param urls
-     * @return null : no routers ,do nothing
-     * else :routers list
+     * @return null : no routers ,do nothing else :routers list
      */
     private List<Router> toRouters(List<URL> urls) {
         List<Router> routers = new ArrayList<Router>();
@@ -458,8 +445,8 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
     }
 
     /**
-     * Turn urls into invokers, and if url has been refer, will not re-reference.
-     * 将url转换为调用者，如果url已被引用，则不会重新引用
+     * Turn urls into invokers, and if url has been refer, will not re-reference. 将url转换为调用者，如果url已被引用，则不会重新引用
+     *
      * @param urls
      * @return invokers
      */
@@ -546,8 +533,8 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
     }
 
     /**
-     * Merge url parameters. the order is: override > -D >Consumer > Provider
-     * 合并url参数
+     * Merge url parameters. the order is: override > -D >Consumer > Provider 合并url参数
+     *
      * @param providerUrl
      * @return
      */
@@ -592,6 +579,7 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
 
     /**
      * 根据路由规则 ，匹配合适的 Invoker 集合。
+     *
      * @param invokers
      * @param method
      * @return
@@ -610,8 +598,8 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
     }
 
     /**
-     * Transform the invokers list into a mapping relationship with a method
-     * 将调用者列表转换为与方法的映射关系
+     * Transform the invokers list into a mapping relationship with a method 将调用者列表转换为与方法的映射关系
+     *
      * @param invokersMap Invoker Map
      * @return Mapping relation between Invoker and method
      */
@@ -672,8 +660,7 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
     }
 
     /**
-     * Close all invokers
-     * 关闭所有的服务
+     * Close all invokers 关闭所有的服务
      */
     private void destroyAllInvokers() {
         Map<String, Invoker<T>> localUrlInvokerMap = this.urlInvokerMap; // local reference
@@ -695,9 +682,8 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
     }
 
     /**
-     * Check whether the invoker in the cache needs to be destroyed
-     * If set attribute of url: refer.autodestroy=false, the invokers will only increase without decreasing,there may be a refer leak
-     * 销毁不再使用的 Invoker 集合
+     * Check whether the invoker in the cache needs to be destroyed If set attribute of url: refer.autodestroy=false, the invokers will only increase without decreasing,there may be a refer leak 销毁不再使用的 Invoker 集合
+     *
      * @param oldUrlInvokerMap
      * @param newUrlInvokerMap
      */
@@ -751,10 +737,11 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
         if (forbidden) {
             // 1. No service provider 2. Service providers are disabled
             throw new RpcException(RpcException.FORBIDDEN_EXCEPTION,
-                "No provider available from registry " + getUrl().getAddress() + " for service " + getConsumerUrl().getServiceKey() + " on consumer " +  NetUtils.getLocalHost()
-                        + " use dubbo version " + Version.getVersion() + ", please check status of providers(disabled, not registered or in blacklist).");
+                    "No provider available from registry " + getUrl().getAddress() + " for service " + getConsumerUrl().getServiceKey() + " on consumer " + NetUtils.getLocalHost()
+                            + " use dubbo version " + Version.getVersion() + ", please check status of providers(disabled, not registered or in blacklist).");
         }
         List<Invoker<T>> invokers = null;
+        // 获取invoker是从methodInvokerMap中获取
         Map<String, List<Invoker<T>>> localMethodInvokerMap = this.methodInvokerMap; // local reference
         if (localMethodInvokerMap != null && localMethodInvokerMap.size() > 0) {
             // 获得方法名

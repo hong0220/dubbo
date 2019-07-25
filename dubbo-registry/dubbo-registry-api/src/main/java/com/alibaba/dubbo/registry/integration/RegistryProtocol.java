@@ -52,10 +52,6 @@ import static com.alibaba.dubbo.common.Constants.QOS_ENABLE;
 import static com.alibaba.dubbo.common.Constants.QOS_PORT;
 import static com.alibaba.dubbo.common.Constants.VALIDATION_KEY;
 
-/**
- * RegistryProtocol
- *
- */
 public class RegistryProtocol implements Protocol {
 
     // 日志记录
