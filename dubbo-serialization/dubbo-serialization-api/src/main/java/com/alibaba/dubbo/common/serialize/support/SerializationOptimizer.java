@@ -19,14 +19,13 @@ package com.alibaba.dubbo.common.serialize.support;
 import java.util.Collection;
 
 /**
- * This class can be replaced with the contents in config file, but for now I think the class is easier to write
- *
+ * 该接口序列化优化器接口，在Kryo 、FST中，支持配置需要优化的类。
+ * 业务系统中，可以实现自定义的SerializationOptimizer进行配置，或使用文件来配置
  */
 public interface SerializationOptimizer {
 
     /**
      * 需要序列化的类的集合
-     * @return
      */
     Collection<Class> getSerializableClasses();
 }

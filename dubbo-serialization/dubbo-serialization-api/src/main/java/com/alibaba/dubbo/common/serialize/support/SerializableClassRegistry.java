@@ -27,7 +27,6 @@ public abstract class SerializableClassRegistry {
     private static final Set<Class> registrations = new LinkedHashSet<Class>();
 
     /**
-     * only supposed to be called at startup time
      * 把可序列化的类加入到集合
      */
     public static void registerClass(Class clazz) {
