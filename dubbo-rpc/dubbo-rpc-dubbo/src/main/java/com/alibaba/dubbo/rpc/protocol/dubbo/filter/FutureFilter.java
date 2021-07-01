@@ -50,6 +50,7 @@ public class FutureFilter implements Filter {
         final boolean isAsync = RpcUtils.isAsync(invoker.getUrl(), invocation);
 
         fireInvokeCallback(invoker, invocation);
+
         // need to configure if there's return value before the invocation in order to help invoker to judge if it's
         // necessary to return future.
         Result result = invoker.invoke(invocation);
@@ -92,12 +93,14 @@ public class FutureFilter implements Filter {
                         logger.error(new IllegalStateException("invalid result value : null, expected " + Result.class.getName()));
                         return;
                     }
+
                     ///must be rpcResult
                     // 如果不是Result则打印错误日志
                     if (!(rpcResult instanceof Result)) {
                         logger.error(new IllegalStateException("invalid result type :" + rpcResult.getClass() + ", expected " + Result.class.getName()));
                         return;
                     }
+
                     Result result = (Result) rpcResult;
                     if (result.hasException()) {
                         // 如果有异常，则调用异常处理方法
@@ -122,10 +125,15 @@ public class FutureFilter implements Filter {
      * @param invocation
      */
     private void fireInvokeCallback(final Invoker<?> invoker, final Invocation invocation) {
+        // 获取事件配置信息
         // 获得调用的方法
-        final Method onInvokeMethod = (Method) StaticContext.getSystemContext().get(StaticContext.getKey(invoker.getUrl(), invocation.getMethodName(), Constants.ON_INVOKE_METHOD_KEY));
+        final Method onInvokeMethod = (Method) StaticContext.getSystemContext().get(
+            StaticContext.getKey(invoker.getUrl(), invocation.getMethodName(),
+                Constants.ON_INVOKE_METHOD_KEY));
         // 获得调用的服务
-        final Object onInvokeInst = StaticContext.getSystemContext().get(StaticContext.getKey(invoker.getUrl(), invocation.getMethodName(), Constants.ON_INVOKE_INSTANCE_KEY));
+        final Object onInvokeInst = StaticContext.getSystemContext().get(
+            StaticContext.getKey(invoker.getUrl(), invocation.getMethodName(),
+                Constants.ON_INVOKE_INSTANCE_KEY));
 
         if (onInvokeMethod == null && onInvokeInst == null) {
             return;
@@ -138,14 +146,16 @@ public class FutureFilter implements Filter {
             onInvokeMethod.setAccessible(true);
         }
 
-        // 获得参数数组
+        // 获得方法参数数组
         Object[] params = invocation.getArguments();
         try {
-            // 调用方法
+            // 调用方法，触发oninvoke事件
             onInvokeMethod.invoke(onInvokeInst, params);
         } catch (InvocationTargetException e) {
+            // 触发onthrow事件
             fireThrowCallback(invoker, invocation, e.getTargetException());
         } catch (Throwable e) {
+            // 触发onthrow事件
             fireThrowCallback(invoker, invocation, e);
         }
     }

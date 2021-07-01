@@ -52,6 +52,9 @@ public class ApplicationModel {
         return providedServices.get(serviceName);
     }
 
+    /**
+     * 获取消费者信息
+     */
     public static ConsumerModel getConsumerModel(String serviceName) {
         return consumedServices.get(serviceName);
     }

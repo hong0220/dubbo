@@ -57,6 +57,8 @@ public class ConsumerModel {
     }
 
     /**
+     * 获取消费者对应的方法信息
+     *
      * Return method model for the given method on consumer side
      *
      * @param method method object
